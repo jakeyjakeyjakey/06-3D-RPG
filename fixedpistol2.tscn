@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/1911_govt_model_NONE.material" type="Material" id=1]
+[ext_resource path="res://Assets/1911_govt_model.material" type="Material" id=2]
+[ext_resource path="res://Assets/fixedpistol.glb" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Pistol.material" type="Material" id=4]
+
+[node name="fixedpistol" instance=ExtResource( 3 )]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0 )
+
+[node name="Object_3" parent="Sketchfab_model/1911_pre-series70objcleanermaterialmergergles" index="0"]
+material/0 = ExtResource( 2 )
+
+[node name="Object_4" parent="Sketchfab_model/1911_pre-series70objcleanermaterialmergergles" index="1"]
+material/0 = ExtResource( 4 )
+
+[node name="Object_6" parent="Sketchfab_model/1911_pre-series70objcleanermaterialmergergles" index="2"]
+material/0 = ExtResource( 1 )
