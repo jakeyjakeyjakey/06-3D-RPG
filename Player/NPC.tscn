@@ -1,5 +1,6 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
+[ext_resource path="res://Player/NPC.gd" type="Script" id=1]
 [ext_resource path="res://Assets/survivorMaleB.png" type="Texture" id=2]
 [ext_resource path="res://Assets/skin.material" type="Material" id=3]
 
@@ -4663,6 +4664,7 @@ start_node = "Idle"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
 [node name="Player" type="KinematicBody"]
+script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1.92101, 0.21824 )
@@ -4903,7 +4905,7 @@ skin = SubResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="Root/Skeleton"]
-transform = Transform( -0.857375, 0.112986, 0.502149, 0.408464, -0.444248, 0.797375, 0.313168, 0.888749, 0.334736, -0.656916, 1.30755, 0.279264 )
+transform = Transform( -0.833468, 0.123996, 0.538487, 0.426896, -0.47427, 0.769957, 0.350856, 0.871602, 0.342355, -0.659916, 1.32295, 0.248374 )
 bone_name = "right_hand_thumb_1"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

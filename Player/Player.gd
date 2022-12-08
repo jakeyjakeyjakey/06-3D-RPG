@@ -7,12 +7,14 @@ var state_machine = $AnimationTree.get("parameters/playback")
 
 var velocity = Vector3()
 var gravity = -9.8
-var speed = 0.2
+var speed = 0.5
 var max_speed = 4
+var speed_bonus = 0 
 var mouse_sensitivity = 0.002
 
 var is_idle setget set_is_idle, get_is_idle
 var is_running setget set_is_running, get_is_running
+var is_walking setget set_is_walking, get_is_walking
 
 func set_is_idle(value):
 	anim_tree.set("parameters/conditions/is_idle", value)
@@ -26,6 +28,11 @@ func set_is_running(value):
 func get_is_running():
 	anim_tree.get("parameters/conditions/is_running")
 
+func set_is_walking(value):
+	anim_tree.set("parameters/conditions/is_walking", value)
+
+func get_is_walking():
+	anim_tree.get("parameters/conditions/is_walking")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -38,7 +45,7 @@ func _physics_process(_delta):
 	
 	var desired_velocity = get_input() * speed
 	if desired_velocity.length():
-		velocity += desired_velocity
+		velocity = desired_velocity + speed_bonus
 	else:
 		velocity *= 0.9
 	var current_speed = velocity.length()
@@ -62,27 +69,35 @@ func _input(event):
 func get_input():
 	var input_dir = Vector3()
 	self.is_running = false
+	self.is_walking = false
 	if Input.is_action_pressed("forward"):
-		self.is_running = true
+		self.is_idle = false
+		self.is_walking = true
 		input_dir -= Camera.global_transform.basis.z
 	if Input.is_action_pressed("back"):
 		self.is_idle = false
-		self.is_running = true
+		self.is_walking = true
 		input_dir += Camera.global_transform.basis.z
 	if Input.is_action_pressed("left"):
 		self.is_idle = false
-		self.is_running = true
+		self.is_walking = true
 		input_dir -= Camera.global_transform.basis.x
 	if Input.is_action_pressed("right"):
 		self.is_idle = false
-		self.is_running = true
+		self.is_walking = true
 		input_dir += Camera.global_transform.basis.x
 	if Input.is_action_just_pressed("shoot"):
 		self.is_idle = false
-		self.is_running = false
+		self.is_walking = false
 		state_machine.travel("Shoot")
+	if Input.is_action_pressed("shift_run"):
+		self.is_idle = false
+		self.is_walking = false
+		self.is_running = true
+		speed_bonus = 10
 	else:
 		self.is_idle = true
+		speed_bonus = 0
 	
 	input_dir = input_dir.normalized()
 	return input_dir

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Assets/skin.material" type="Material" id=1]
 [ext_resource path="res://Assets/survivorMaleB.png" type="Texture" id=2]
@@ -4633,10 +4633,13 @@ tracks/44/keys = PoolRealArray( 0, 1, 0, 0, 0, 9.31322e-10, -1.00797e-19, -1.082
 animation = "Idle"
 
 [sub_resource type="AnimationNodeAnimation" id=20]
-animation = "Run"
+animation = "Walk"
 
 [sub_resource type="AnimationNodeAnimation" id=21]
 animation = "Shoot"
+
+[sub_resource type="AnimationNodeAnimation" id=28]
+animation = "Walk"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=22]
 advance_condition = "is_running"
@@ -4651,14 +4654,23 @@ advance_condition = "is_idle"
 switch_mode = 2
 auto_advance = true
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
+advance_condition = "is_walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+switch_mode = 2
+advance_condition = "is_idle"
+
 [sub_resource type="AnimationNodeStateMachine" id=26]
 states/Idle/node = SubResource( 19 )
 states/Idle/position = Vector2( 359, 74 )
 states/Run/node = SubResource( 20 )
-states/Run/position = Vector2( 573, 74 )
+states/Run/position = Vector2( 749, 74 )
 states/Shoot/node = SubResource( 21 )
-states/Shoot/position = Vector2( 359, 205 )
-transitions = [ "Idle", "Run", SubResource( 22 ), "Run", "Idle", SubResource( 23 ), "Idle", "Shoot", SubResource( 24 ), "Shoot", "Idle", SubResource( 25 ) ]
+states/Shoot/position = Vector2( 359, 188 )
+states/Walk/node = SubResource( 28 )
+states/Walk/position = Vector2( 749, 157 )
+transitions = [ "Idle", "Run", SubResource( 22 ), "Run", "Idle", SubResource( 23 ), "Idle", "Shoot", SubResource( 24 ), "Shoot", "Idle", SubResource( 25 ), "Idle", "Walk", SubResource( 29 ), "Walk", "Idle", SubResource( 30 ) ]
 start_node = "Idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
@@ -4851,7 +4863,7 @@ bones/35/name = "right_hand_thumb_1"
 bones/35/parent = 31
 bones/35/rest = Transform( -0.554881, -0.654406, -0.513673, -0.0427129, 0.639042, -0.767985, 0.830832, -0.4042, -0.382544, -0.063919, 0.0509812, -0.0128302 )
 bones/35/enabled = true
-bones/35/bound_children = [  ]
+bones/35/bound_children = [ NodePath("BoneAttachment") ]
 bones/36/name = "right_hand_thumb_2"
 bones/36/parent = 35
 bones/36/rest = Transform( 0.660497, -0.565645, -0.49375, 0.514051, -0.138638, 0.846481, -0.54726, -0.812912, 0.199201, 9.52321e-08, 0.105868, 2.92955e-08 )
@@ -4904,7 +4916,7 @@ skin = SubResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="Root/Skeleton"]
-transform = Transform( -0.855124, 0.114093, 0.505724, 0.410386, -0.447105, 0.794787, 0.316788, 0.887174, 0.335508, -0.657212, 1.30904, 0.276293 )
+transform = Transform( -0.860382, 0.111482, 0.497319, 0.405832, -0.440421, 0.800834, 0.308306, 0.890841, 0.333687, -0.656514, 1.30555, 0.283256 )
 bone_name = "right_hand_thumb_1"
 
 [node name="fixedpistol2" parent="Root/Skeleton/BoneAttachment" instance=ExtResource( 3 )]
@@ -4933,3 +4945,4 @@ active = true
 parameters/playback = SubResource( 27 )
 parameters/conditions/is_idle = false
 parameters/conditions/is_running = false
+parameters/conditions/is_walking = false
