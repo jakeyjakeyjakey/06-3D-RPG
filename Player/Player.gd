@@ -1,16 +1,22 @@
 extends KinematicBody
 
 onready var Camera = get_node("/root/Game/Player/Pivot/Camera")
+onready var aimcast = get_node("/root/Game/Player/Pivot/Camera/AimCast")
+
 onready var anim_tree = $AnimationTree
 onready var anim_play = $AnimationPlayer
+onready var audio = $AudioStreamPlayer
 var state_machine = $AnimationTree.get("parameters/playback")
 
 var velocity = Vector3()
 var gravity = -9.8
-var speed = 0.5
-var max_speed = 4
-var speed_bonus = 0 
+var speed 
+var default_speed = 7
+var sprint_speed = 14
+var max_speed = 15
 var mouse_sensitivity = 0.002
+var damage = 200
+var health = 100
 
 var is_idle setget set_is_idle, get_is_idle
 var is_running setget set_is_running, get_is_running
@@ -39,13 +45,14 @@ func _ready():
 	print(state_machine.get_current_node())
 
 func _physics_process(_delta):	
+	speed = default_speed
 	velocity.y += gravity * _delta
 	var falling = velocity.y
 	velocity.y = 0
 	
 	var desired_velocity = get_input() * speed
 	if desired_velocity.length():
-		velocity = desired_velocity + speed_bonus
+		velocity = desired_velocity
 	else:
 		velocity *= 0.9
 	var current_speed = velocity.length()
@@ -90,14 +97,21 @@ func get_input():
 		self.is_idle = false
 		self.is_walking = false
 		state_machine.travel("Shoot")
+		audio.play()
+		print("Bang")
+		if aimcast.is_colliding():
+			var target = aimcast.get_collider()
+			if target.is_in_group("enemy"):
+				print("hit enemy")
+				target.health -= damage
 	if Input.is_action_pressed("shift_run"):
 		self.is_idle = false
 		self.is_walking = false
 		self.is_running = true
-		speed_bonus = 10
+		speed = sprint_speed
+		
 	else:
 		self.is_idle = true
-		speed_bonus = 0
 	
 	input_dir = input_dir.normalized()
 	return input_dir

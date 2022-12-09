@@ -1,7 +1,7 @@
 [gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Player/NPC.gd" type="Script" id=1]
-[ext_resource path="res://Assets/survivorMaleB.png" type="Texture" id=2]
+[ext_resource path="res://Assets/survivorFemaleA.png" type="Texture" id=2]
 [ext_resource path="res://Assets/skin.material" type="Material" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -4905,7 +4905,7 @@ skin = SubResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="Root/Skeleton"]
-transform = Transform( -0.833468, 0.123996, 0.538487, 0.426896, -0.47427, 0.769957, 0.350856, 0.871602, 0.342355, -0.659916, 1.32295, 0.248374 )
+transform = Transform( -0.836494, 0.122671, 0.53408, 0.424803, -0.470513, 0.773412, 0.346164, 0.873823, 0.34147, -0.659563, 1.32105, 0.252198 )
 bone_name = "right_hand_thumb_1"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

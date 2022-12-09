@@ -2,7 +2,7 @@ extends Node
 
 var timer = 0
 var score = 0
-
+var player
 
 func update_score(s):
 	score += s
